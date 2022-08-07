@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# This script changing WM theme from Operation-green <-> Operation-blue ONLY!
+# It didn't restore changes made by you.
+
+help () {
+  echo "toggleTheme - change WM theme from Operation-green <-> Operation-blue";
+  echo "COPYLEFT; morketsmerke.net @ 2022";
+  echo "Usage:";
+  echo -e "\t$ toggleTheme <green | blue>";
+}
+
+if [ "$1" ]; then
+  OLDTHEME=$(basename $(grep 'session.styleFile' $HOME/.fluxbox/init | awk '{printf $2}'));
+  OLDWALL=$(basename $(grep '^feh' $HOME/.xinitrc | awk '{printf $4}'));
+  if [ "$1" == "blue" ]; then 
+    NEWTHEME="Operation-blue";
+    NEWWALL="wall_style1_logo.png";
+  elif [ "$1" == "green" ]; then
+    NEWTHEME="Operation-green";
+    NEWWALL="gnome_wallpaper.jpg";
+  else
+    help;
+  fi
+  sed -i "s/$OLDTHEME/$NEWTHEME/" ~/.fluxbox/init;
+	sed -i "s/$OLDWALL/$NEWWALL/" ~/.xinitrc;
+	cp ~/.xinitrc ~/.xsession;
+	feh --no-fehbg --bg-fill /usr/share/backgrounds/${NEWWALL};
+  fluxbox-remote restart;
+else
+  help;
+fi		
