@@ -10,17 +10,17 @@ sudo systemctl enable slim.service;
 sudo pacman -Sy qutebrowser firefox shotwell gimp qmmp vlc arandr pulseaudio pavucontrol xscreensaver ranger htop neofetch zathura zathura-pdf-poppler leafpad virt-manager x11-ssh-askpass wget feh;
 
 # Coping necessary data for fluxbox and other staff.
-cp -prvv archflux/fluxbox ~/.fluxbox;
+cp -prvv /archflux/fluxbox ~/.fluxbox;
 fmenuhostname=$(grep -o 'arch[0-9]*' ~/.fluxbox/menu);
 sed -i "s/$fmenuhostname/$(cat /etc/hostname)/" ~/.fluxbox/menu;
 sudo mv /usr/share/slim/themes/default/background.jpg /usr/share/slim/themes/default/background.jpg1;
-sudo cp archflux/split.jpg /usr/share/slim/themes/default/background.jpg;
-cp archflux/XTerm ~/XTerm;
-cp archflux/vimrc ~/.vimrc;
-sudo cp archflux/toggleTheme /usr/local/bin;
+sudo cp /archflux/split.jpg /usr/share/slim/themes/default/background.jpg;
+cp /archflux/XTerm ~/XTerm;
+cp /archflux/vimrc ~/.vimrc;
+sudo cp /archflux/toggleTheme /usr/local/bin;
 sudo chmod +x /usr/local/bin/toggleTheme;
-sudo cp archflux/wall_style1_logo.png /usr/share/backgrounds
-sudo cp archflux/gnome_wallpaper.jpg /usr/share/backgrounds
+sudo cp /archflux/wall_style1_logo.png /usr/share/backgrounds
+sudo cp /archflux/gnome_wallpaper.jpg /usr/share/backgrounds
 
 # Create .xinitrc and .xsession files.
 echo "xscreensaver --no-splash &" > ~/.xinitrc
@@ -34,6 +34,7 @@ echo "/usr/bin/neofetch" >> ~/.bashrc;
 
 # Compilation and installation ncspot (spotify terminal client) from AUR:
 sudo pacman -Sy dbus libpulse libxcb ncurses openssl alsa-lib cargo git pkgconf python rust base-devel;
+cd $HOME;
 git clone https://aur.archlinux.org/ncspot.git
 cd ncspot;
 makepkg -si
